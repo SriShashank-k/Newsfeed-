@@ -1,26 +1,25 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0",>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>News APP</title>
 </head> 
 <body>
     <h1>New App</h1>
 
-    {%for i in articles %}
+    {% for i in articles %}
     
-    <img src="(f i.urlToImage }}" alt="" height="200px" width="200px">
+    <img src="{{ i.urlToImage }}" alt="" height="200px" width="200px">
             <p>{{ i.author }}</p>
             <p>{{ i.title }}</p>
-            <p>{{ i. description }}</p>
+            <p>{{ i.description }}</p>
             
-            <a href="{f i.url f}" target=" _blank">Go Full news</a> 
-            <small> published at: {{ i.publishedAt f}}</small>
+            <a href="{{ i.url }}" target="_blank">Go Full news</a> 
+            <small> published at: {{ i.publishedAt }}</small>
 
-    {%endfor %}
+    {% endfor %}
 
 </body>
 </html>
