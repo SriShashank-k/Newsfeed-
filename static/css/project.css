@@ -1,0 +1,28 @@
+{% block css %}
+  <!-- Latest compiled and minified Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <!-- Your stuff: Third-party CSS libraries go here -->
+  <!-- This file stores project-specific CSS -->
+
+  <link href="{% static 'css/project.css' %}" rel="stylesheet">
+
+  <style>
+    /* Custom styles */
+    .navbar-dark .navbar-brand {
+      color: red; /* Change navbar brand text color to red */
+    }
+
+    .navbar-dark .navbar-nav .nav-link {
+      color: red; /* Change nav link text color to red */
+    }
+
+    .navbar-dark .navbar-toggler-icon {
+      background-color: red; /* Change navbar toggler icon color to red */
+    }
+
+    .bg-dark {
+      background-color: black !important; /* Change navbar background color to black */
+    }
+  </style>
+{% endblock %}
