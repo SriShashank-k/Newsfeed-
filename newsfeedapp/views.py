@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import SignUPForm
 from django.contrib.auth import authenticate, login
@@ -49,6 +49,11 @@ def articles_home(request):
 def home(request):
 
     return render(request, 'newsfeedapp/home.html')
+
+def user_logout(request):
+    logout(request)
+    messages.success(request, 'You have been logged out.')
+    return redirect('home')
 
 def login_user(request):
     if request.method == 'POST':
