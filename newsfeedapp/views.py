@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
+from .forms import SignUPForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
 import requests
@@ -68,3 +69,18 @@ def login_user(request):
         form = AuthenticationForm()
     
     return render(request, 'newsfeedapp/login.html', {'form': form})
+
+def register_user(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data['username']
+            raw_password = form.cleaned_data['password1']
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            messages.success(request, 'You have successfully registered and logged in.')
+            return redirect('home')
+    else:
+        form = SignUpForm()
+    return render(request, 'newsfeedapp/register.html', {'form': form})
