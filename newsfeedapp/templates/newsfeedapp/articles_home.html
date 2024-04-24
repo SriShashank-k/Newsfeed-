@@ -11,6 +11,25 @@
             font-family: Arial, sans-serif; /* Use Arial font */
         }
 
+        .bordered-heading {
+            background-color: #000; /* Black background */
+            color: #fff; /* White text color */
+            font-family: 'Robinson', sans-serif; /* Use Robinson font */
+            text-transform: uppercase; /* Uppercase letters */
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 20px;
+            font-size: 2rem; /* Larger font size */
+            letter-spacing: 3px; /* Increased letter spacing */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Shadowed outline effect */
+        }
+
+        h1 span {
+            display: inline-block;
+            padding: 0 20px;
+            border: 2px solid #fff; /* White border */
+        }
+
         .card {
             background-color: #000; /* Black card background */
             border-radius: 15px;
@@ -78,7 +97,10 @@
         }
     </style>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap">
-    <h1>News App</h1>
+    <title>News APP</title>
+</head> 
+<body>
+    <h1 class="bordered-heading"><span>Newsfeed+</span></h1>
 
     <h2>Search Country</h2>
 
@@ -98,19 +120,6 @@
     <br>
     <br>
 
-
-    <h2>Search Category</h2>
-
-    <form action="" method="get">
-        <input type="text" name="category">
-        <button type="submit" value="Search">Search</button>
-    </form>
-    <br>
-    <br>
-
-
-
-
     <div class="container"> 
         <div class="row">
             <div class="col-md-6">
@@ -127,7 +136,6 @@
                         <div class="card-footer">
                             <small>{{ article.published_at }}</small>
                             <a href="{{ article.url }}" target="_blank" class="btn btn-primary">See Full Article</a>
-                            
 
                         </div>
                     </div>
@@ -137,6 +145,22 @@
 
             
             </div>
+            
+            <div class="col-md-6">
+                <h3><b>Category</b></h3>
+                <hr>
+                <br>
+                <ul class="list-group">
+                    <li class="list-group-item"><a class="btn btn-secondary" href="{% url 'articles' %}?category=technology">Technology</a></li>
+                    <li class="list-group-item"><a class="btn btn-success" href="{% url 'articles' %}?category=health">Health</a></li>
+                    <li class="list-group-item"><a class="btn btn-danger" href="{% url 'articles' %}?category=Entertainment">Entertainment</a></li>
+                    <li class="list-group-item"><a class="btn btn-secondary" href="{% url 'articles' %}?category=Sports">Sports</a></li>
+                    <li class="list-group-item"><a class="btn btn-primary" href="{% url 'articles' %}?category=Science">Science</a></li>
+                    <li class="list-group-item"><a class="btn btn-info" href="{% url 'articles' %}?category=Business">Business</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>
