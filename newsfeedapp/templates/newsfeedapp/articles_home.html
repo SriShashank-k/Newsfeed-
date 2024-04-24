@@ -9,6 +9,34 @@
 <body>
     <h1>New App</h1>
 
+    <h2>Search Country</h2>
+
+    <form action="" method="get">
+        <input type="text" name="country">
+        <button type="submit" value="Search">Search</button>
+    </form>
+    <br>
+    <br>
+
+    <h2>Search Language</h2>
+
+    <form action="" method="get">
+        <input type="text" name="language">
+        <button type="submit" value="Search">Search</button>
+    </form>
+    <br>
+    <br>
+
+
+    <h2>Search Category</h2>
+
+    <form action="" method="get">
+        <input type="text" name="category">
+        <button type="submit" value="Search">Search</button>
+    </form>
+
+
+
     {% for i in articles %}
     
     <img src="{{ i.urlToImage }}" alt="" height="200px" width="200px">
