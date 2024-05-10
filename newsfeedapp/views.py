@@ -54,7 +54,7 @@ def articles_home(request):
     if country:
         headlines = Headline.objects.filter(country=country)
     elif category:
-        headlines = Headline.objects.filter(category=category)
+        headlines = Headline.objects.filter(category=category.lower())
     elif language:
         headlines = Headline.objects.filter(language=language)
     else:
