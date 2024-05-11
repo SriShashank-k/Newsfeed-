@@ -96,18 +96,20 @@
                 <option value="">Select Country</option>
                 <option value="us">United States</option>
                 <option value="in">India</option>
+                <option value="ru">Russia</option>
+                
                 <!-- Add more options for other countries -->
             </select>
             <br>
 
             <label for="category">Category:</label>
             <div class="category-buttons">
-                <button type="button" class="btn btn-primary">Business</button>
-                <button type="button" class="btn btn-primary">Technology</button>
-                <button type="button" class="btn btn-primary">Health</button>
-                <button type="button" class="btn btn-primary">Sports</button>
-                <button type="button" class="btn btn-primary">Science</button>
-                <button type="button" class="btn btn-primary">Entertainment</button>
+                <button type="button" class="btn btn-primary" onclick="location.href='{% url 'headline_list' %}?category=business'">Business</button>
+                <button type="button" class="btn btn-primary" onclick="location.href='{% url 'headline_list' %}?category=technology'">Technology</button>
+                <button type="button" class="btn btn-primary" onclick="location.href='{% url 'headline_list' %}?category=health'">Health</button>
+                <button type="button" class="btn btn-primary" onclick="location.href='{% url 'headline_list' %}?category=sports'">Sports</button>
+                <button type="button" class="btn btn-primary" onclick="location.href='{% url 'headline_list' %}?category=entertainment'">Entertainment</button>
+                <button type="button" class="btn btn-primary" onclick="location.href='{% url 'headline_list' %}?category=science'">Science</button>
                 <!-- Add more buttons for other categories -->
             </div>
             <br>
