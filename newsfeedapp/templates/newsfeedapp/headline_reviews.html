@@ -24,7 +24,15 @@
     <h3>All Reviews</h3>
     <ul>
         {% for review in reviews %}
-            <li>{{ review.user.username }} - {{ review.review }} - {{review.created_at}}</li>
+            <li>{{ review.user.username }} - {{ review.review }} - {{review.created_at}} 
+            {% if review.user == request.user %}
+            <form method="post" action="{% url 'delete_review' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="review_id" value="{{ review.id }}">
+                    <button type="submit">Delete</button>
+                </form>
+            {% endif %}
+            </li>
         {% empty %}
             <li>No reviews yet.</li>
         {% endfor %}
