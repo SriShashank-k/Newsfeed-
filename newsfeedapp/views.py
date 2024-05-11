@@ -7,7 +7,7 @@ from django.contrib.auth.forms import AuthenticationForm
 import requests
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Headline, Review
-
+from django.contrib.auth.decorators import login_required
 
 #API_KEY = '1dddff4a40694624917ef6388a945af7'
 
@@ -88,6 +88,18 @@ def headline_reviews(request, headline_id):
     }
 
     return render(request, 'newsfeedapp/headline_reviews.html', context)
+
+@login_required
+def delete_review(request):
+    if request.method == 'POST':
+        review_id = request.POST.get('review_id')
+        review = get_object_or_404(Review, pk=review_id)
+
+        # Check if the review belongs to the current user
+        if review.user == request.user:
+            review.delete()
+
+    return redirect('headline_reviews', headline_id=review.headline.id)
 
 def home(request):
 
