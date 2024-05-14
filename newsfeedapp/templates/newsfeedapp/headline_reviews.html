@@ -1,0 +1,41 @@
+<!-- headline_reviews.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ headline.title }} Reviews</title>
+</head>
+<body>
+    <h2>{{ headline.title }} Reviews</h2>
+    <p>Description: {{ headline.description }}</p>
+    <p>URL: <a href="{{ headline.url }}">{{ headline.url }}</a></p>
+    <p>Source Name: {{ headline.source_name }}</p>
+    <p>Published At: {{ headline.published_at }}</p>
+
+    <h3>Submit a Review</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit Review</button>
+    </form>
+
+    <h3>All Reviews</h3>
+    <ul>
+        {% for review in reviews %}
+            <li>{{ review.user.username }} - {{ review.review }} - {{review.created_at}} 
+            {% if review.user == request.user %}
+            <form method="post" action="{% url 'delete_review' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="review_id" value="{{ review.id }}">
+                    <button type="submit">Delete</button>
+                </form>
+            {% endif %}
+            </li>
+        {% empty %}
+            <li>No reviews yet.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
