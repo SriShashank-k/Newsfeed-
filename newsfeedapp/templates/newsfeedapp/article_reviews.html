@@ -1,0 +1,20 @@
+<!-- article_reviews.html -->
+<h1>{{ article.title }}</h1>
+
+<!-- Display existing reviews -->
+{% for review in reviews %}
+    <div>
+        <p>Rating: {{ review.rating }}</p>
+        <p>Comment: {{ review.comment }}</p>
+        <p>By: {{ review.user }}</p>
+        <p>Date: {{ review.created_at }}</p>
+    </div>
+{% endfor %}
+
+<!-- Form to add new review -->
+<form method="post">
+    {% csrf_token %}
+    <input type="number" name="rating" placeholder="Rating" required>
+    <textarea name="comment" placeholder="Comment" required></textarea>
+    <button type="submit">Submit Review</button>
+</form>
