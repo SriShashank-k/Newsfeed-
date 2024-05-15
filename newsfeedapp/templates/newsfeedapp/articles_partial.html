@@ -1,0 +1,7 @@
+{% for headline in headlines %}
+    <div class="headline">
+        <h3>{{ headline.title }}</h3>
+        <p>{{ headline.description }}</p>
+        <a href="{{ headline.url }}" target="_blank">Read more</a>
+    </div>
+{% endfor %}
