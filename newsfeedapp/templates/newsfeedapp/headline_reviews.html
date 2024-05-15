@@ -1,41 +1,147 @@
-<!-- headline_reviews.html -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ headline.title }} Reviews</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light gray background */
+            font-family: Arial, sans-serif; /* Use Arial font */
+        }
+
+        .bordered-heading {
+            background-color: #000; /* Black background */
+            color: #fff; /* White text color */
+            font-family: 'Roboto', sans-serif; /* Use Roboto font */
+            text-transform: uppercase; /* Uppercase letters */
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 20px;
+            font-size: 2rem; /* Larger font size */
+            letter-spacing: 3px; /* Increased letter spacing */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Shadowed outline effect */
+        }
+
+        .card {
+            background-color: #fff; /* White card background */
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            margin-bottom: 20px;
+            max-width: 500px; /* Max width for the card */
+            overflow: hidden; /* Hide overflow content */
+            color: #000; /* Black font color */
+            aspect-ratio: 16/9; /* Aspect ratio 16:9 */
+        }
+
+        .card img {
+            width: 100%;
+            height: auto;
+            object-fit: cover; /* Cover image */
+        }
+
+        .card-body {
+            padding: 1rem;
+            height: 200px; /* Fixed height for card body */
+            overflow: auto; /* Allow scrolling if content overflows */
+        }
+
+        .card-title {
+            color: #000; /* Black title color */
+            font-size: 1.5rem; /* Slightly smaller title font size */
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.5); /* Black line below the title */
+            padding-bottom: 0.5rem;
+        }
+
+        .card-description {
+            color: #555; /* Dark gray description color */
+            font-size: 1rem; /* Normal text font size */
+            margin-top: 1rem; /* Add some space between title and description */
+        }
+
+        .card-footer {
+            background-color: #000; /* Black footer background */
+            border-top: none; /* Remove border from top */
+            padding: 1rem;
+        }
+
+        .btn-primary {
+            background-color: #800000; /* Reddish maroon button color */
+            border: none; /* Remove button border */
+        }
+
+        .btn-primary:hover {
+            background-color: #5a0000; /* Darker shade on hover */
+        }
+
+        .search-form {
+            margin-bottom: 20px;
+        }
+
+        .category-buttons {
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h2>{{ headline.title }} Reviews</h2>
-    <p>Description: {{ headline.description }}</p>
-    <p>URL: <a href="{{ headline.url }}">{{ headline.url }}</a></p>
-    <p>Source Name: {{ headline.source_name }}</p>
-    <p>Published At: {{ headline.published_at }}</p>
+    <div class="container">
+        <h2 class="bordered-heading">{{ headline.title }} Reviews</h2>
+        <div class="card mb-3">
+            <div class="card-body">
+                <p class="card-text">Description: {{ headline.description }}</p>
+                <p class="card-text">URL: <a href="{{ headline.url }}">{{ headline.url }}</a></p>
+                <p class="card-text">Source Name: {{ headline.source_name }}</p>
+                <p class="card-text">Published At: {{ headline.published_at }}</p>
+            </div>
+        </div>
 
-    <h3>Submit a Review</h3>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Submit Review</button>
-    </form>
+        <h3 class="bordered-heading" style="font-size: 1.8rem; padding: 5px 0;">Submit a Review</h3>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Submit Review</button>
+        </form>
 
-    <h3>All Reviews</h3>
-    <ul>
-        {% for review in reviews %}
-            <li>{{ review.user.username }} - {{ review.review }} - {{review.created_at}} 
-            {% if review.user == request.user %}
-            <form method="post" action="{% url 'delete_review' %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="review_id" value="{{ review.id }}">
-                    <button type="submit">Delete</button>
-                </form>
-            {% endif %}
-            </li>
-        {% empty %}
-            <li>No reviews yet.</li>
-        {% endfor %}
-    </ul>
+        <h3 class="bordered-heading" style="font-size: 1.8rem; padding: 5px 0;">All Reviews</h3>
+        <div class="card">
+            <ul class="list-group list-group-flush">
+                {% for review in reviews %}
+                <li class="list-group-item">
+                    {{ review.user.username }} - {{ review.review }} - {{review.created_at}} 
+                    {% if review.user == request.user %}
+                    <button type="button" class="btn btn-danger delete-review-btn" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal-{{ review.id }}">Delete</button>
+                    <div class="modal fade" id="confirmDeleteModal-{{ review.id }}" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Delete</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Are you sure you want to delete this review?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <form method="post" action="{% url 'delete_review' %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="review_id" value="{{ review.id }}">
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </li>
+                {% empty %}
+                <li class="list-group-item">No reviews yet.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
